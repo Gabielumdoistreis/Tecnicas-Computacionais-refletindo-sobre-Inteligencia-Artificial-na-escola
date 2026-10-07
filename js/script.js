@@ -41,7 +41,8 @@ function respostaSelecionada(opcaoSelecionada){
 function mostraResultado(){
     caixaPerguntas.textContent = "Em 2049...";
     textoResultado.textContent = historiaFinal;
-    caixaAlternativas.textContent = ""; 
+    caixaAlternativas.textContent = "";
+    botaoJogarNovamente.addEventListener("click", JogarNovamente()); 
 }
 function aleatorio (lista){
         const posicao = Math.floor(Math.random()* lista.length);
