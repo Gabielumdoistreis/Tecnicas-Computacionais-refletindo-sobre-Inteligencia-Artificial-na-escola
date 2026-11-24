@@ -1,13 +1,16 @@
-import {aleatorio} from "./aleatorio.js";
-import {perguntas} from "./perguntas.js"
-
+import {aleatorio, nomes,nome} from "./aleatorio.js";
+import {perguntas} from "./perguntas.js";
 
 const caixaPrincipal = document.querySelector(".caixa-principal");
 const caixaPerguntas = document.querySelector(".caixa-perguntas");
 const caixaAlternativas = document.querySelector(".caixa-alternativas");
 const caixaResultado = document.querySelector(".caixa-resultado");
 const textoResultado = document.querySelector(".texto-resultado");
-const botaoJogarNovamente=document.querySelector(".novamente-btn")
+const botaoJogarNovamente= document.querySelector(".novamente-btn")
+
+const nomeSorteado= aleatorio (nomes);//Adicionado 07-11
+
+
 
 let atual = 0; 
 let perguntaAtual;
@@ -32,26 +35,35 @@ function mostraAlternativas(){
         caixaAlternativas.appendChild(botaoAlternativas);
     }
 }
+
 function respostaSelecionada(opcaoSelecionada){
-        const afirmacoes = aleatorio(opcaoSelecionada.afirmacao);
-        historiaFinal += afirmacoes + " ";
-        atual++;
-        mostraPergunta();
+    const afirmacoes = opcaoSelecionada.afirmacao;
+    historiaFinal += afirmacoes + " ";
+    atual++;
+    mostraPergunta();
 }
+
 function mostraResultado(){
-    caixaPerguntas.textContent = "Em 2049...";
+    caixaPerguntas.textContent = `Em 2049 ${nome}`;
     textoResultado.textContent = historiaFinal;
     caixaAlternativas.textContent = "";
-    botaoJogarNovamente.addEventListener("click", JogarNovamente()); 
+    caixaResultado.classlist.add(mostrar);
+    
+    
+    botaoJogarNovamente.addEventListener("click" , jogaNovamente);
 }
-function aleatorio (lista){
-        const posicao = Math.floor(Math.random()* lista.length);
-        return lista[posicao];
-}
-function JogarNovamente(){
-    atual = 0;
-    historiaFinal = "";
-    mostraPergunta();
 
+function jogarNovamente(){
+    atual=0;
+    historiaFinal=""
+    mostraPergunta();
+    caixaResultado.classlist.remove(mostrar);
 }
-mostraPergunta();
+    function substituiNome(){
+        for (const pergunta of perguntas) {
+            pergunta.enunciado=pergunta.enunciado.replace(/você/g,nome)
+        }
+    }
+    
+substituiNome()
+mostraPergunta()
